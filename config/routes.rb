@@ -3,8 +3,10 @@ Games::Application.routes.draw do
   resources :tic_tac_toe_games do 
     resources :ttt_moves 
   end
+  resources :users, only: [:index, :new, :create]
+  resources :sessions, only: [:new, :create, :destroy]
   post '/tic_tac_toe_games/:tic_tac_toe_game_id/ttt_moves', to: 'ttt_moves#create', as: 'create_tic_tac_toe_game_ttt_move'
-  root to: 'tic_tac_toe_games#index'
+  root to: 'application#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

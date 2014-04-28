@@ -1,9 +1,12 @@
-<h1>TicTacToeGames#show</h1>
+<h1>A Game of Tick Tack Toe</h1>
+<% if @game.game_over? %> 
+  <h2>GAME OVER! <%= @game.winner.username %> won! </h2>
+<% end %>
 <h2>X player: <%= @game.x_user.username %></h2>
 <h2>O player: <%= @game.y_user.username %></h2>
-<h3>Moves:</h3>
 <p>
   <table>
+    <tbody>
     <tr>
       <td>
         <%= board_move(@game, @moves, 1, 1) %>
@@ -37,9 +40,10 @@
         <%= board_move(@game, @moves, 3, 3) %>
       </td>
     </tr>
+  </tbody>
   </table>
 </p>
-<h3>Next turn:</h3>
-  <%= @game.user_turn.username %>
-  <%=  %>
-
+<% if @game.continue? %> 
+  <h3>Next turn:</h3>
+    <%= @game.user_turn.username %>
+<% end %>

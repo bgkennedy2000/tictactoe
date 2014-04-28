@@ -18,18 +18,35 @@ class TicTacToeGame < ActiveRecord::Base
   end
  end
 
- def compile_user_moves
-  x_user = self.x_user
-  y_user = self.y_user
-  @x_moves = self.moves.where(user_id:"#{x_user}")
-  @y_moves = self.moves.where(user_id:"#{y_user}")
+ def continue?
+  if self.winner_id == nil
+    true
+  else
+    false
+  end
+ end
+
+ def game_over? 
+  if self.winner_id
+    true
+  else
+    false
+  end
+ end
+
+ def compile_current_user_moves
+  user = self.user_turn
+  moves = self.ttt_moves.where(user_id:"#{user.id}")
+  moves.collect do |move|
+    [move.x_coordinate, move.y_coordinate]
+  end
  end
 
  def check_for_winner
-  self.compile_user_moves
-  winning_combinations
+  @current_user_moves = self.compile_current_user_moves
+  @winners = winning_combinations
   @winners.collect do |winner| 
-    if winner & array == winner
+    if winner & @current_user_moves == winner
       true 
     end
   end
@@ -37,13 +54,13 @@ class TicTacToeGame < ActiveRecord::Base
 
 end
 
-def winning_combinations
- @winners = [ [ [1, 1], [2, 1], [3, 1] ],
-              [ [1, 2], [2, 2], [3, 2] ],
-              [ [1, 3], [2, 3], [3, 3] ],
-              [ [1, 1], [1, 2], [1, 3] ],
-              [ [2, 1], [2, 2], [2, 3] ],
-              [ [3, 1], [3, 2], [3, 3] ],
-              [ [1, 1], [2, 2], [3, 3] ],
-              [ [3, 1], [2, 2], [1, 3] ] ]
-end
+  def winning_combinations
+ [ [ [1, 1], [2, 1], [3, 1] ],
+   [ [1, 2], [2, 2], [3, 2] ],
+   [ [1, 3], [2, 3], [3, 3] ],
+   [ [1, 1], [1, 2], [1, 3] ],
+   [ [2, 1], [2, 2], [2, 3] ],
+   [ [3, 1], [3, 2], [3, 3] ],
+   [ [1, 1], [2, 2], [3, 3] ],
+   [ [3, 1], [2, 2], [1, 3] ] ]
+  end

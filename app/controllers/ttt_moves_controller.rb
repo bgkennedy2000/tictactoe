@@ -12,9 +12,10 @@ class TttMovesController < ApplicationController
     if @game.check_for_winner.include?(true)
       @game.update_attributes(winner_id: @game.user_turn.id)
       redirect_to tic_tac_toe_game_path(@game.id), notice: "You Win!"
-    end
+    else
     @game.change_player_turn
     redirect_to tic_tac_toe_game_path(@game.id)
+    end
   end
 
   def edit

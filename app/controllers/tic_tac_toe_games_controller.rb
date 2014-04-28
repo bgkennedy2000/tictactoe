@@ -4,6 +4,7 @@ class TicTacToeGamesController < ApplicationController
   end
 
   def new
+    @game = TicTacToeGame.new
   end
 
   def create

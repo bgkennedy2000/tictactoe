@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140427184408) do
+ActiveRecord::Schema.define(:version => 20140428173813) do
 
   create_table "tic_tac_toe_games", :force => true do |t|
     t.integer  "x_user_id"
     t.integer  "y_user_id"
     t.integer  "user_turn_id"
-    t.integer  "winners_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "winner_id"
   end
 
   create_table "ttt_moves", :force => true do |t|
