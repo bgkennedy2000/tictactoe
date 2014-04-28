@@ -1,0 +1,45 @@
+<h1>TicTacToeGames#show</h1>
+<h2>X player: <%= @game.x_user.username %></h2>
+<h2>O player: <%= @game.y_user.username %></h2>
+<h3>Moves:</h3>
+<p>
+  <table>
+    <tr>
+      <td>
+        <%= board_move(@game, @moves, 1, 1) %>
+      </td> 
+      <td>
+        <%= board_move(@game, @moves, 2, 1) %>
+      </td>
+      <td>
+        <%= board_move(@game, @moves, 3, 1) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= board_move(@game, @moves, 1, 2) %>
+      </td> 
+      <td>
+        <%= board_move(@game, @moves, 2, 2) %>
+      </td>
+      <td>
+        <%= board_move(@game, @moves, 3, 2) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= board_move(@game, @moves, 1, 3) %>
+      </td> 
+      <td>
+        <%= board_move(@game, @moves, 2, 3) %>
+      </td>
+      <td>
+        <%= board_move(@game, @moves, 3, 3) %>
+      </td>
+    </tr>
+  </table>
+</p>
+<h3>Next turn:</h3>
+  <%= @game.user_turn.username %>
+  <%=  %>
+

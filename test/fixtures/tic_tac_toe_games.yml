@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  x_user_id: 1
+  y_user_id: 1
+  user_turn: 1
+  winner: 1
+
+two:
+  x_user_id: 1
+  y_user_id: 1
+  user_turn: 1
+  winner: 1

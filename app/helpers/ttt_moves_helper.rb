@@ -1,0 +1,3 @@
+module TttMovesHelper
+
+end

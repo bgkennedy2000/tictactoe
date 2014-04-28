@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  game_id: 1
+  user_id: 1
+  x_coordinate: 1
+  y_coordinate: 1
+
+two:
+  game_id: 1
+  user_id: 1
+  x_coordinate: 1
+  y_coordinate: 1

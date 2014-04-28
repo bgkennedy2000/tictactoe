@@ -1,0 +1,7 @@
+<h1>TicTacToeGames#index</h1>
+<p>Games:</p>
+<% @games.each do |game| %>
+<p><%= link_to game.id, tic_tac_toe_game_path(game.id) %></p>
+<% end %>
+
+

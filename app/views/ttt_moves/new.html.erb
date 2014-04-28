@@ -1,0 +1,9 @@
+<h1>TttMoves#new</h1>
+<%= form_for @move do |move| %>
+  <%= move.label 'X-coord' %>
+  <%= move.text_field :x_coordinate %>
+  <%= move.label 'y-coord' %>
+  <%= move.text_field :y_coordinate %>
+  <%= move.submit %>
+  <% end %>
+
