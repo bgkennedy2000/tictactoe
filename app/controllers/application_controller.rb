@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 def index
-
+  @games = TicTacToeGame.games(session[:user_id])
 end
 
 helper_method :current_user

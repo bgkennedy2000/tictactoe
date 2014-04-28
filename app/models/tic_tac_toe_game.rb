@@ -52,6 +52,23 @@ class TicTacToeGame < ActiveRecord::Base
   end
  end
 
+ def self.games(user_id)
+  games = { }
+  if user_id
+    temp = self.where(x_user_id: "#{user_id}")
+    temp.each do |game|
+      # create a has with the the opponent as key and the game as the value
+      games[game.y_user] = game
+    end
+    temp = self.where(y_user_id: "#{user_id}")
+    temp.each do |game|
+      games[game.x_user] = game
+    end
+    return games
+  else
+    { }
+  end
+ end
 end
 
   def winning_combinations

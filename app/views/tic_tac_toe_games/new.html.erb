@@ -1,12 +1,12 @@
 <h1>Find an Opponenet</h1>
 
-<form action="<%= create_tic_tac_toe_game_path %>" method='post' %>
+<%= form_tag '/tic_tac_toe_games' %>
   <div class='fields'>
     <%= label_tag 'Username' %>
     <%= text_field_tag :username%>
   </div>
     <%= submit_tag 'Start Game!' %>
-</form>
+  <br>
   <table>
     <thead>Potential Opponents</thead>
     <% @users.each do |user| %>

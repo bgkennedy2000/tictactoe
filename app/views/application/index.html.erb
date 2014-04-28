@@ -1,4 +1,7 @@
 <h1>Games</h1>
 <h2>Tic-Tac-Toe</h2>
 <h3>insert image here</h3>
-<%= link_to 'New Two Player Game', new_tic_tac_toe_game_path %>
+<%= link_to 'New Two Player Game', new_tic_tac_toe_game_path %><br>
+<% @games.each do |opponent, game| %>
+  <%= link_to "Continue Game vs: #{opponent.username}", tic_tac_toe_game_path(game.id) %><br>
+<% end %>
