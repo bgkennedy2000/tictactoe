@@ -1,3 +1,13 @@
+<ul class="errors">
+  <% @move.errors.try(:full_messages).try(:each) do |error| %>
+    <li>
+      <%= error %>
+    </li>
+  <% end %>
+</ul>
+
+
+
 <h1>A Game of Tick Tack Toe</h1>
 <% if @game.game_over? %> 
   <h2>GAME OVER! <%= @game.winner.username %> won! </h2>
@@ -15,35 +25,35 @@
     <tbody>
     <tr>
       <td>
-        <%= board_move(@game, @moves, 1, 1) %>
+        <%= board_move(@game, @game.ttt_moves, 1, 1) %>
       </td> 
       <td>
-        <%= board_move(@game, @moves, 2, 1) %>
+        <%= board_move(@game, @game.ttt_moves, 2, 1) %>
       </td>
       <td>
-        <%= board_move(@game, @moves, 3, 1) %>
+        <%= board_move(@game, @game.ttt_moves, 3, 1) %>
       </td>
     </tr>
     <tr>
       <td>
-        <%= board_move(@game, @moves, 1, 2) %>
+        <%= board_move(@game, @game.ttt_moves, 1, 2) %>
       </td> 
       <td>
-        <%= board_move(@game, @moves, 2, 2) %>
+        <%= board_move(@game, @game.ttt_moves, 2, 2) %>
       </td>
       <td>
-        <%= board_move(@game, @moves, 3, 2) %>
+        <%= board_move(@game, @game.ttt_moves, 3, 2) %>
       </td>
     </tr>
     <tr>
       <td>
-        <%= board_move(@game, @moves, 1, 3) %>
+        <%= board_move(@game, @game.ttt_moves, 1, 3) %>
       </td> 
       <td>
-        <%= board_move(@game, @moves, 2, 3) %>
+        <%= board_move(@game, @game.ttt_moves, 2, 3) %>
       </td>
       <td>
-        <%= board_move(@game, @moves, 3, 3) %>
+        <%= board_move(@game, @game.ttt_moves, 3, 3) %>
       </td>
     </tr>
   </tbody>

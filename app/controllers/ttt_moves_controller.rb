@@ -7,15 +7,26 @@ class TttMovesController < ApplicationController
   end
 
   def create
+    @computer = set_computer_user
     @game = TicTacToeGame.find(params[:tic_tac_toe_game_id])
-    @move = TttMove.create(tic_tac_toe_game_id: @game.id, user_id: @game.user_turn.id, x_coordinate: params[:x_coord], y_coordinate: params[:y_coord])
-    if @game.check_for_winner.include?(true)
-      @game.update_attributes(winner_id: @game.user_turn.id)
-      redirect_to tic_tac_toe_game_path(@game.id), notice: "You Win!"
+    @move = @game.ttt_moves.build(user_id: current_user.id, x_coordinate: params[:x_coord], y_coordinate: params[:y_coord])
+    @move.record_move
+    if @game.check_for_winner
+      render '/tic_tac_toe_games/show', notice: "You win!"
     else
-    @game.change_player_turn
-    redirect_to tic_tac_toe_game_path(@game.id)
+      @game.change_player_turn
     end
+    if @game.y_user == @computer
+      TttMove.do_computer_move(@game)
+      if @game.check_for_winner
+        redirect_to tic_tac_toe_game_path(@game.id), notice: "You lose!"
+      else
+        @game.change_player_turn
+        redirect_to tic_tac_toe_game_path(@game.id), notice: "Your turn!"
+      end
+    else
+      redirect_to tic_tac_toe_game_path(@game.id), notice: "Your turn!"
+    end   
   end
 
   def edit

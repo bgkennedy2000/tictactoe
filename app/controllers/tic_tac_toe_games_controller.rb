@@ -4,21 +4,39 @@ class TicTacToeGamesController < ApplicationController
   end
 
   def new
-    @game = TicTacToeGame.new
-    @users = User.all
+    @game_type = params[:game_type] 
+    case @game_type
+      when "dual"
+        @game = TicTacToeGame.new
+        @users = User.all
+      when "single"
+        create
+    end
+
   end
 
   def create
-    opponent = User.find_by_username(params[:username])
-    if opponent.nil? 
-      # build test in case same username or make username unique
-      @users = User.all
-      flash[:notice] = "Username not found"
-      render :new 
-    else
-    first_turn = [session[:user_id], opponent.id].shuffle
-    @game = TicTacToeGame.create(x_user_id: session[:user_id], y_user_id: opponent.id, user_turn_id: first_turn[0])
-    redirect_to tic_tac_toe_game_path(@game.id)
+    @move = TttMove.new
+    @game_type ||= "dual"
+    case @game_type
+      when "dual"
+        opponent = User.find_by_username(params[:username])
+        if opponent.nil? 
+          # build test in case same username or make username unique
+          @users = User.all
+          flash[:notice] = "Username not found"
+          render :new 
+        else
+          first_turn = [session[:user_id], opponent.id].shuffle
+          @game = TicTacToeGame.create(x_user_id: session[:user_id], y_user_id: opponent.id, user_turn_id: first_turn[0])
+          redirect_to tic_tac_toe_game_path(@game.id)
+        end
+      when "single" # create game with user id 12, which is "computer" username, as opponent 
+        @computer = set_computer_user
+        first_turn = [session[:user_id], @computer.id ].shuffle
+        @game = TicTacToeGame.new(x_user_id: session[:user_id], y_user_id: @computer.id, user_turn_id: session[:user_id])
+        @game.save
+        redirect_to tic_tac_toe_game_path(@game.id)     
     end
   end
 
@@ -33,6 +51,6 @@ class TicTacToeGamesController < ApplicationController
 
   def show
     @game = TicTacToeGame.find(params[:id])
-    @moves = @game.ttt_moves
+    @move = TttMove.new
   end
 end

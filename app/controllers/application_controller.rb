@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 def index
-  @games = TicTacToeGame.games(session[:user_id])
+  @games = TicTacToeGame.recent_games(session[:user_id])
 end
 
 helper_method :current_user
@@ -19,5 +19,11 @@ helper_method :current_user
       redirect_to new_session_path
     end
   end
+
+helper_method :set_computer_user 
+  def set_computer_user
+    User.find(12)
+  end
+
 
 end

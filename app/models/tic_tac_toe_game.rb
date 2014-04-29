@@ -6,15 +6,22 @@ class TicTacToeGame < ActiveRecord::Base
   belongs_to :winner, class_name: "User"
   has_many :ttt_moves
 
+  validates :user_turn_id, presence: true
+  validates :x_user_id, presence: true
+  validates :y_user_id, presence: true
+
+    # get all the users games in reverse chronological order
+  scope :user_games, lambda { |user_id| where(["x_user_id = ? or y_user_id = ?", "#{user_id}", "#{user_id}" ]).order('created_at DESC') }
+
  def change_player_turn
   x_user = self.x_user
   y_user = self.y_user
   just_played_user = self.user_turn
   case just_played_user
     when x_user
-      self.update_attributes(user_turn_id: self.y_user.id) 
+      self.update_attributes(user_turn_id: self.y_user_id) 
     when y_user
-      self.update_attributes(user_turn_id: self.x_user.id) 
+      self.update_attributes(user_turn_id: self.x_user_id) 
   end
  end
 
@@ -45,26 +52,38 @@ class TicTacToeGame < ActiveRecord::Base
  def check_for_winner
   @current_user_moves = self.compile_current_user_moves
   @winners = winning_combinations
-  @winners.collect do |winner| 
+  temp = @winners.collect do |winner| 
     if winner & @current_user_moves == winner
       true 
     end
   end
+  if temp.include? true
+    self.declare_winner
+  else
+    nil
+  end
  end
 
- def self.games(user_id)
+ def declare_winner
+  self.winner = self.user_turn
+  self.save
+  self.winner
+ end
+
+ def self.recent_games(user_id)
   games = { }
   if user_id
-    temp = self.where(x_user_id: "#{user_id}")
+    temp = self.user_games(user_id)
     temp.each do |game|
-      # create a has with the the opponent as key and the game as the value
-      games[game.y_user] = game
+      # create a hash with the the opponent as key and the game as the value, add gameID to key to prevent overwriting games w/ same opponents
+      if game.y_user_id == user_id && game.continue?
+        games[ [game.x_user, game.id] ] = game
+      end
+      if game.x_user_id == user_id && game.continue?
+        games[ [ game.y_user, game.id ] ] = game
+      end
     end
-    temp = self.where(y_user_id: "#{user_id}")
-    temp.each do |game|
-      games[game.x_user] = game
-    end
-    return games
+    return games.first(3)
   else
     { }
   end

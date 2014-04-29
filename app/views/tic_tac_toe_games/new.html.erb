@@ -1,6 +1,6 @@
 <h1>Find an Opponenet</h1>
 
-<%= form_tag '/tic_tac_toe_games' %>
+<%= form_tag '/tic_tac_toe_games', method: :post %>
   <div class='fields'>
     <%= label_tag 'Username' %>
     <%= text_field_tag :username%>
