@@ -1,5 +1,14 @@
 <h1>Find an Opponenet</h1>
 
+  <ul class="errors">
+    <% @game.errors.full_messages.each do |error| %>
+      <li>
+        <%= error %>
+      </li> 
+    <% end %>
+  </ul>
+
+
 <%= form_tag '/tic_tac_toe_games', method: :post %>
   <div class='fields'>
     <%= label_tag 'Username' %>
@@ -12,7 +21,7 @@
     <% @users.each do |user| %>
     <tr>
       <td class='username_list'>
-        <%= user.username %>
+        <%= user.username unless user.id == 12 %>
       </td>
     </tr>
     <% end %>

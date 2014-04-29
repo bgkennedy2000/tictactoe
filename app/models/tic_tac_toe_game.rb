@@ -8,10 +8,19 @@ class TicTacToeGame < ActiveRecord::Base
 
   validates :user_turn_id, presence: true
   validates :x_user_id, presence: true
-  validates :y_user_id, presence: true
+  validates :y_user_id, presence: true  # add custom message if possible
+
+  validate :play_yourself?
 
     # get all the users games in reverse chronological order
   scope :user_games, lambda { |user_id| where(["x_user_id = ? or y_user_id = ?", "#{user_id}", "#{user_id}" ]).order('created_at DESC') }
+
+  def play_yourself?
+    if self.x_user == self.y_user
+      errors.add(:user_error, "A player cannot play him/herself. That would be stupid.")
+    end
+
+  end
 
  def change_player_turn
   x_user = self.x_user
@@ -88,6 +97,13 @@ class TicTacToeGame < ActiveRecord::Base
     { }
   end
  end
+
+ def played_moves
+  self.ttt_moves.collect do |move|
+        [ move.x_coordinate, move.y_coordinate ]
+    end
+  end
+
 end
 
   def winning_combinations

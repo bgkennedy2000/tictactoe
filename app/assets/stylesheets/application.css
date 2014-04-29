@@ -23,3 +23,6 @@ td {
 td.username_list {
   height: 20px;
 }
+.errors {
+  background-color: red;
+}

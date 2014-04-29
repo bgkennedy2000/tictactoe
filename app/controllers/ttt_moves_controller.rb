@@ -12,7 +12,7 @@ class TttMovesController < ApplicationController
     @move = @game.ttt_moves.build(user_id: current_user.id, x_coordinate: params[:x_coord], y_coordinate: params[:y_coord])
     @move.record_move
     if @game.check_for_winner
-      render '/tic_tac_toe_games/show', notice: "You win!"
+      render('/tic_tac_toe_games/show', notice: "You win!") and return
     else
       @game.change_player_turn
     end

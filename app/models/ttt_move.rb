@@ -9,12 +9,12 @@ class TttMove < ActiveRecord::Base
   validates :y_coordinate, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 3 }
 
   validate :users_turn?
+  validate :square_available? 
 
-  def record_move
-    if self.save
-      self.save 
-    else
-      redirect_to tic_tac_toe_game_path(@game.id), notice: "Not a valid move. Try again."
+  def square_available? 
+    move_to_check = [self.x_coordinate, self.y_coordinate]
+    if self.tic_tac_toe_game.played_moves.include?(move_to_check)
+      errors.add(:move_location, "That square you have chosen is not available.  Try again.")
     end
   end
 
@@ -24,12 +24,18 @@ class TttMove < ActiveRecord::Base
     end
   end
 
+
+  def record_move
+    if self.save
+      self.save 
+    else
+      redirect_to tic_tac_toe_game_path(@game.id), notice: "Not a valid move. Try again."
+    end
+  end
+
   def self.do_computer_move(game)
-    played_moves = game.ttt_moves.collect do |move|
-        [ move.x_coordinate, move.y_coordinate ]
-      end
     available_moves = all_moves
-    xy = opposite_of_intersect(played_moves, available_moves).shuffle[0]
+    xy = opposite_of_intersect(game.played_moves, available_moves).shuffle[0]
     move = game.ttt_moves.build(user_id: game.y_user_id, x_coordinate: xy[0], y_coordinate: xy[1])
     if move.save
       move.save

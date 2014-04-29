@@ -20,16 +20,14 @@ class TicTacToeGamesController < ApplicationController
     @game_type ||= "dual"
     case @game_type
       when "dual"
-        opponent = User.find_by_username(params[:username])
-        if opponent.nil? 
-          # build test in case same username or make username unique
-          @users = User.all
-          flash[:notice] = "Username not found"
-          render :new 
-        else
-          first_turn = [session[:user_id], opponent.id].shuffle
-          @game = TicTacToeGame.create(x_user_id: session[:user_id], y_user_id: opponent.id, user_turn_id: first_turn[0])
+        @opponent = User.find_by_username(params[:username])
+        first_turn = [session[:user_id], @opponent.try(:id)].shuffle
+        @game = TicTacToeGame.new(x_user_id: session[:user_id], y_user_id: @opponent.try(:id), user_turn_id: first_turn[0])
+        if @game.save 
           redirect_to tic_tac_toe_game_path(@game.id)
+        else
+          @users = User.all
+          render :new
         end
       when "single" # create game with user id 12, which is "computer" username, as opponent 
         @computer = set_computer_user
