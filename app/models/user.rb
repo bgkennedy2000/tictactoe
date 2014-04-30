@@ -7,5 +7,5 @@ class User < ActiveRecord::Base
   has_many :ttt_moves
 
   has_secure_password
-  validates :username, uniqueness: true # add custom message
+  validates :username, uniqueness: { message: "Sorry.  That username is already taken.  Please choose another username."}
 end

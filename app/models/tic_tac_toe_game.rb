@@ -8,7 +8,7 @@ class TicTacToeGame < ActiveRecord::Base
 
   validates :user_turn_id, presence: true
   validates :x_user_id, presence: true
-  validates :y_user_id, presence: true  # add custom message if possible
+  validates :y_user_id, presence: { message: "Please provide a valid username" }
 
   validate :play_yourself?
 
