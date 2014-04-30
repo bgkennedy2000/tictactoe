@@ -11,18 +11,161 @@
  *= require_self
  *= require_tree .
  */
-
-table {
-  border: 1px solid black;
-}
-td {
-  border: 1px solid black;
+header {
+  background-color: #191919;
   height: 75px;
-  width: 75px;
+  margin: 0 0;
+  color: #b2b2b2;
+  padding: 0 35px;
+}
+header a {
+  color: #b2b2b2;
+  text-decoration: none;
+  text-transform: none;
+  display: inline-block;
+  clear: none;
+}
+header h4 {
+  display: inline-block;
+  border-left: 2px solid #b2b2b2;
+  border-right: 2px solid #b2b2b2;
+  padding: 26px 10px;
+  margin: 0;
+}
+img.home {
+  width: 125px;
+  display: block;
+  margin: 15px auto;
+}
+p.home a {
+  background-color: #263326;
+  color: #b2b2b2;
+  text-decoration: none;
+  text-transform: none;
+  display: inline-block;
+  clear: both;
+  margin: 10px auto;
+  width: 250px;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  display: block;
+}
+body {
+  color: #191919;
+  background-color: #b2b2b2;
+  margin: 0 0;
+  font-family: 'Montserrat', sans-serif;
+}
+section {
+  margin: 30px auto;
+  width: 80%;
+  clear: both;
+}
+section.player-info {
+  width: 40%;
+  height: 100px;
+  margin: 0 auto;
+}
+.x-play img {
+  width: 60px;
+  margin-top: 10px;
+  float:left;
+}
+.o-play img {
+  width: 75px
+}
+.x-play, .y-play {
+  width: 50%;
+  display: block;
+  margin: auto auto;
+}
+table {
+  margin: 0 auto;
+}
+h1 { 
+  font-family: 'Varela Round', sans-serif;
+  text-align: center;
+}
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+h2.home {
+  width: 250px;
+  border-bottom: 2px solid #191919;
+  text-align: center;
+  margin: 0 auto;
+}
+.game-head {
+  width: 100%;
+}
+h3 {
+  font-family: 'Varela Round', sans-serif; 
+}
+h4 {
+  font-family: 'Montserrat', sans-serif; 
+}
+.username {
+  dislay: block;
+  float: left;
+  padding: 10px;
+}
+
+table.board td.top {
+  border-bottom: 3px solid #191919;
+  border-top: none;
+}
+table.board td.bottom { 
+  border-top: 3px solid #191919;
+  border-bottom: none;
+}
+table.board td.left { 
+  border-right: 3px solid #191919;
+  border-left: none
+}
+table.board td.right { 
+  border-left: 3px solid #191919;
+  border-right: none;
+}
+table.board img.x-play {
+  width: 100px;
+  margin: 12px;
+}
+table.board img.o-play {
+  width: 125px;
+  margin: auto auto;
+}
+table.board td {
+  border: 3px solid #191919;
+  height: 125px;
+  width: 125px;
 }
 td.username_list {
   height: 20px;
 }
 .errors {
   background-color: red;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float:right;
+}
+.next-play {
+  opacity: 0;
+}
+.next-play:hover {
+  opacity: .5;
+}
+.flash-message {
+  height: 50px;
+  text-align: center;
+  background-color: #7F5B4C;
+}
+.flash-message p {
+  padding: 12px;
+  margin: 0;
 }

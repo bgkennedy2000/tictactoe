@@ -20,9 +20,7 @@
     <thead>Potential Opponents</thead>
     <% @users.each do |user| %>
     <tr>
-      <td class='username_list'>
-        <%= user.username unless user.id == 12 %>
-      </td>
+      <td class='username_list'><%= user.username unless user.username == 'Computer' %></td>
     </tr>
     <% end %>
   </table>

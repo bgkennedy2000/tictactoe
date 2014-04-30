@@ -10,9 +10,7 @@
 # TicTacToeGame.delete_all
 # TttMove.delete_all
 
-# User.create(username:"Ben")
-# User.create(username:"John")
-# User.create(username:"Mike")
+User.create(username:"Computer", password:"password")
 
 # TicTacToeGame.create(x_user_id:1, y_user_id:2, user_turn_id:1)
 

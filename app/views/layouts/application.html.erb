@@ -5,22 +5,28 @@
   <%= stylesheet_link_tag  "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <%= yield :head %>
 </head>
 <body>
   <% flash.each do |name, message| %>
     <div class="flash-message flash-message-<%= name %>">
-      <%= message %>
+      <p><%= message %></p>
     </div>
   <% end %>
-  <% if current_user %>
-    <p> hello, <%= current_user.username %> </p>
-    <%= link_to 'Logout', session_path(session), method: :delete %>
-  <% else %>
-    <%= link_to 'Login', new_session_path %> or 
-    <%= link_to 'Create Account', new_user_path %>
-  <% end %>
-  <%= link_to 'Main Menu', root_path %>
-
+  <header>
+    <div class='float-right'>
+      <% if current_user %>
+        <h4> what's up, <%= link_to current_user.username, user_path(current_user.id) %></h4>
+        <h4><%= link_to 'Logout', session_path(session), method: :delete %></h4>
+      <% else %>
+        <h4><%= link_to 'Login', new_session_path %> </h4>
+        <h4><%= link_to 'Create Account', new_user_path %></h4>
+      <% end %>
+    </div>
+    <h4 class='float-left'><%= link_to 'Main Menu', root_path %></h4>
+  </header>
 
 
 

@@ -3,7 +3,7 @@ Games::Application.routes.draw do
   resources :tic_tac_toe_games do 
     resources :ttt_moves 
   end
-  resources :users, only: [:index, :new, :create]
+  resources :users, only: [:index, :new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
   post '/tic_tac_toe_games/:tic_tac_toe_game_id/ttt_moves', to: 'ttt_moves#create', as: 'create_tic_tac_toe_game_ttt_move'
   post '/tic_tac_toe_games/', to: 'tic_tac_toe_games#create', as: 'create_tic_tac_toe_game'

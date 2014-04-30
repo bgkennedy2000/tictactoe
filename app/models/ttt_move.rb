@@ -25,24 +25,26 @@ class TttMove < ActiveRecord::Base
   end
 
 
-  def record_move
-    if self.save
-      self.save 
-    else
-      redirect_to tic_tac_toe_game_path(@game.id), notice: "Not a valid move. Try again."
-    end
+  def invalid_move?
+    self.save
   end
 
   def self.do_computer_move(game)
     available_moves = all_moves
     xy = opposite_of_intersect(game.played_moves, available_moves).shuffle[0]
     move = game.ttt_moves.build(user_id: game.y_user_id, x_coordinate: xy[0], y_coordinate: xy[1])
-    if move.save
-      move.save
-    else
-      raise "Error processing computer's move.  Sorry!"
-    end
+    raise "Error processing computer's move.  Sorry!" unless move.save
   end
+
+  def make_x_or_o?(xhtml, ohtml)
+    if self.user_id == self.tic_tac_toe_game.x_user_id
+      xhtml
+    elsif self.user_id == self.tic_tac_toe_game.y_user_id 
+      ohtml
+    else
+      raise 'Cannot determine if player is X or O'
+    end
+  end  
 
 end
 

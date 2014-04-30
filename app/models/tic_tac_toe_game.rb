@@ -1,5 +1,6 @@
 class TicTacToeGame < ActiveRecord::Base
   attr_accessible :user_turn_id, :winner_id, :x_user_id, :y_user_id
+  attr_accessor :game_message
   belongs_to :x_user, class_name: "User"
   belongs_to :y_user, class_name: "User"
   belongs_to :user_turn, class_name: "User"
@@ -8,7 +9,7 @@ class TicTacToeGame < ActiveRecord::Base
 
   validates :user_turn_id, presence: true
   validates :x_user_id, presence: true
-  validates :y_user_id, presence: { message: "Please provide a valid username" }
+  validates :y_user_id, presence: { message: "not found. Please provide a valid username" }
 
   validate :play_yourself?
 
@@ -16,7 +17,7 @@ class TicTacToeGame < ActiveRecord::Base
   scope :user_games, lambda { |user_id| where(["x_user_id = ? or y_user_id = ?", "#{user_id}", "#{user_id}" ]).order('created_at DESC') }
 
   def play_yourself?
-    if self.x_user == self.y_user
+    if self.x_user_id == self.y_user_id
       errors.add(:user_error, "A player cannot play him/herself. That would be stupid.")
     end
 
@@ -34,21 +35,21 @@ class TicTacToeGame < ActiveRecord::Base
   end
  end
 
- def continue?
-  if self.winner_id == nil
-    true
-  else
-    false
+  def continue?
+    !game_over?
   end
- end
 
- def game_over? 
-  if self.winner_id
-    true
-  else
-    false
+  def game_over?
+    game_has_been_won? || game_has_been_drawn?
   end
- end
+
+  def game_has_been_won?
+    !!self.winner_id
+  end
+
+  def game_has_been_drawn?
+    played_moves.size == 9 && !game_has_been_won?
+  end
 
  def compile_current_user_moves
   user = self.user_turn
@@ -58,7 +59,7 @@ class TicTacToeGame < ActiveRecord::Base
   end
  end
 
- def check_for_winner
+ def check_for_winner_or_draw
   @current_user_moves = self.compile_current_user_moves
   @winners = winning_combinations
   temp = @winners.collect do |winner| 
@@ -68,15 +69,20 @@ class TicTacToeGame < ActiveRecord::Base
   end
   if temp.include? true
     self.declare_winner
-  else
-    nil
+  elsif game_has_been_drawn?
+    self.declare_draw
   end
  end
 
  def declare_winner
   self.winner = self.user_turn
+  self.game_message = "#{self.winner.username} is the winner!"
   self.save
-  self.winner
+ end
+
+ def declare_draw
+  self.game_message = "Game over! Its a draw!"
+  self.save
  end
 
  def self.recent_games(user_id)
@@ -104,6 +110,15 @@ class TicTacToeGame < ActiveRecord::Base
     end
   end
 
+  def x_or_o_next?(xhtml, ohtml)
+    if self.user_turn == self.x_user
+      xhtml
+    elsif self.user_turn == self.y_user
+      ohtml
+    else
+      raise "Game doesn't know who's turn it is"
+    end
+  end
 end
 
   def winning_combinations
@@ -116,3 +131,10 @@ end
    [ [1, 1], [2, 2], [3, 3] ],
    [ [3, 1], [2, 2], [1, 3] ] ]
   end
+
+  def all_moves
+    [ [1, 1], [2, 1], [3, 1],
+      [1, 2], [2, 2], [3, 2],
+      [1, 3], [2, 3], [3, 3], ]
+  end
+

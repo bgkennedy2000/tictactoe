@@ -1,4 +1,6 @@
-class TicTacToeGamesController < ApplicationController
+class TicTacToeGamesController < ApplicationController  
+  load_and_authorize_resource
+
   def index
   @games = TicTacToeGame.all
   end
@@ -12,10 +14,10 @@ class TicTacToeGamesController < ApplicationController
       when "single"
         create
     end
-
   end
 
   def create
+    @users = User.all
     @move = TttMove.new
     @game_type ||= "dual"
     case @game_type
@@ -26,7 +28,6 @@ class TicTacToeGamesController < ApplicationController
         if @game.save 
           redirect_to tic_tac_toe_game_path(@game.id)
         else
-          @users = User.all
           render :new
         end
       when "single" # create game with user id 12, which is "computer" username, as opponent 
@@ -34,7 +35,7 @@ class TicTacToeGamesController < ApplicationController
         first_turn = [session[:user_id], @computer.id ].shuffle
         @game = TicTacToeGame.new(x_user_id: session[:user_id], y_user_id: @computer.id, user_turn_id: session[:user_id])
         @game.save
-        redirect_to tic_tac_toe_game_path(@game.id)     
+        redirect_to tic_tac_toe_game_path(@game.id) if @game.id    
     end
   end
 

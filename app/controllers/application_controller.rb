@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery  
+
+rescue_from CanCan::AccessDenied do |exception|
+  redirect_to root_url, :alert => exception.message
+end
 
 def index
   @games = TicTacToeGame.recent_games(session[:user_id])
@@ -22,7 +26,7 @@ helper_method :current_user
 
 helper_method :set_computer_user 
   def set_computer_user
-    User.find(12)
+    User.find_by_username('Computer')
   end
 
 

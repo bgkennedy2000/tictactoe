@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    models:
+    attributes:
+      tic_tac_toe_game:
+        y_user_id: "Opponent"

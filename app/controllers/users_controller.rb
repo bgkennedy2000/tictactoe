@@ -7,6 +7,7 @@ class UsersController < ApplicationController
  end
  def create 
   @user = User.new(params[:user])
+  @user.role = 'user'
   if @user.save
    session[:user_id] = @user.id
    redirect_to root_path, notice: "New user created!"
@@ -14,4 +15,10 @@ class UsersController < ApplicationController
    render 'new'
   end
  end
+
+ def show
+  @user = User.find(current_user.id)
+ end
+
+
 end
