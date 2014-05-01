@@ -8,3 +8,10 @@ en:
     attributes:
       tic_tac_toe_game:
         y_user_id: "Opponent"
+        y_user: "User"
+    attributes:
+      user:
+        password_digest: "Password"
+  unauthorized:    
+    new:
+      tic_tac_toe_game: "You must login to start a new game."

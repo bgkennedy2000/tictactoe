@@ -1,13 +1,14 @@
 <h1>Games</h1>
-<section>
+<section class='game_display'>
   <div class='game-head'>
-    <h2 class='home'>Tic-Tac-Toe</h2>
+    <h2 class='heading'>Tic-Tac-Toe</h2>
     <%= image_tag('tic-tac-toe-board.png', class: 'home') %>
   </div>
-  <p class='home'><%= link_to 'New One Player Game', new_tic_tac_toe_game_path(game_type: "single"), method: :get %>
-  <%= link_to 'New Two Player Game', new_tic_tac_toe_game_path(game_type: "dual"), method: :get %>
+  <p class='home'><%= link_to 'New One Player Game', new_tic_tac_toe_game_path(game_type: "single"), method: :get, class: 'new_game' %>
+  <%= link_to 'New Two Player Game', new_tic_tac_toe_game_path(game_type: "dual"), method: :get, class: 'new_game' %>
   <% @games.each do |opponent, game| %>
     <%= link_to "Continue Game vs: #{opponent[0].username}", tic_tac_toe_game_path(game.id) %>
   <% end %>
-  </p>
+    </p>
+  <%= link_to_if @games_count > @games.length, "more ongoing games...", user_path(current_user.id), class: 'more_games' %>
 </section>

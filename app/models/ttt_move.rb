@@ -14,13 +14,13 @@ class TttMove < ActiveRecord::Base
   def square_available? 
     move_to_check = [self.x_coordinate, self.y_coordinate]
     if self.tic_tac_toe_game.played_moves.include?(move_to_check)
-      errors.add(:move_location, "That square you have chosen is not available.  Try again.")
+      errors.add(:the_square, "you have chosen is not available.  Try again.")
     end
   end
 
   def users_turn?
     if self.tic_tac_toe_game.user_turn_id != self.user_id
-      errors.add(:user_id, "Move's user must match the game's user turn")
+      errors.add(:its, "not your turn. Wait a bit and try again.")
     end
   end
 

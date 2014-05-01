@@ -1,26 +1,32 @@
-<h1>Find an Opponenet</h1>
+<h1>Challenge an Opponent</h1>
 
-  <ul class="errors">
-    <% @game.errors.full_messages.each do |error| %>
-      <li>
-        <%= error %>
-      </li> 
-    <% end %>
-  </ul>
-
-
-<%= form_tag '/tic_tac_toe_games', method: :post %>
-  <div class='fields'>
-    <%= label_tag 'Username' %>
-    <%= text_field_tag :username%>
+<% if @game.errors.any? %>
+  <div class="error_messages clearfix">
+    <ul>
+      <% @game.errors.full_messages.each do |error| %>
+        <li>
+          <%= error %>
+        </li> 
+      <% end %>
+    </ul>
   </div>
-    <%= submit_tag 'Start Game!' %>
-  <br>
-  <table>
-    <thead>Potential Opponents</thead>
-    <% @users.each do |user| %>
-    <tr>
-      <td class='username_list'><%= user.username unless user.username == 'Computer' %></td>
-    </tr>
-    <% end %>
-  </table>
+<% end %>
+
+<section class='form'>
+  <%= form_tag '/tic_tac_toe_games', class: 'clearfix', method: :post %>
+    <div class='field clearfix'>
+      <%= label_tag 'Username' %>
+      <%= text_field_tag :username%>
+    </div>
+    <div class='actions'
+      <%= submit_tag 'Start Game!' %>
+    </div>
+    <table>
+      <thead><tr>Potential Opponents</tr></thead>
+      <% @users.each do |user| %>
+      <tr>
+        <td class='username_list'><%= user.username unless user.username == 'Computer' %></td>
+      </tr>
+      <% end %>
+    </table>
+</section>

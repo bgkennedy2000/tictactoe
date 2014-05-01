@@ -1,19 +1,22 @@
 
 
 <h1>Tic-Tac-Toe</h1>
-<h2>Record: <%= @user.tic_tac_toe_games_won.size %> - <%= @user.tic_tac_toe_games_lost.size %> - <%= @user.tic_tac_toe_games_drawn.size %> </h2>
+<h2 class='heading'>Record: <%= @user.tic_tac_toe_games_won.size %> - <%= @user.tic_tac_toe_games_lost.size %> - <%= @user.tic_tac_toe_games_drawn.size %> </h2>
 
 
 <section>
-  <table>
-    <thead>
-      <td>Opponent</td>
-      <td>Outcome</td>
+  <table class='username_list'>
+    <thead class='username_list'>
+      <tr>
+        <td><h3>Opponent</h3></td>
+        <td><h3 class='column-two'>Outcome</h3></td>
+      </tr>
     </thead>
     <% @user.tic_tac_toe_games.each do |game| %>
     <tr>
-      <td class='username_list'><%= @user.opponent(game).try(:username) %></td>
-      <td class='username_list'><%= @user.game_outcome(game) %></td>
+      
+      <td class='username_list'><p><%= @user.opponent(game).try(:username) %></p></td>
+      <td class='username_list column-two'><p><%= link_to @user.game_outcome(game), tic_tac_toe_game_ttt_move_path(game.id) %></p></td>
     </tr>
     <% end %>
   </table>

@@ -7,6 +7,7 @@ end
 
 def index
   @games = TicTacToeGame.recent_games(session[:user_id])
+  @games_count = TicTacToeGame.games_count(session[:user_id])
 end
 
 helper_method :current_user

@@ -1,19 +1,8 @@
 <% content_for :head do %>
   <% unless @game.game_over? %>
-    <META HTTP-EQUIV="refresh" CONTENT="10">
+    <META HTTP-EQUIV="refresh" CONTENT="7">
   <% end %>
 <% end %>
-
-<ul class="errors">
-  <% @move.errors.try(:full_messages).try(:each) do |error| %>
-    <li>
-      <%= error %>
-    </li>
-  <% end %>
-</ul>
-
-
-
 
 <% if @game.game_has_been_won? %> 
   <h1>GAME OVER!<h1>
@@ -28,6 +17,20 @@
 <% if @game.continue? && session[:user_id] == @game.user_turn.id %> 
   <h1>Your play</h1>
 <% end %>
+  
+<% if @move.errors.any? %>
+  <div class="error_messages clearfix">
+    <ul>
+      <% @move.errors.try(:full_messages).try(:each) do |error| %>
+        <li>
+          <%= error %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %> 
+
+
 <section class='player-info'>
   <div class='float-left x-play'>
     <h3 class='username'><%= @game.x_user.username %></h3>

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
    session[:user_id] = user.id
    redirect_to root_path, notice: "logged in!"
   else
-   flash.now.alert = "invalid login credentials"
+   flash.now.alert = "username and/or password not found."
    render "new"
   end
  end

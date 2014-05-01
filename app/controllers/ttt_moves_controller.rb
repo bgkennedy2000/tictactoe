@@ -19,10 +19,10 @@ load_and_authorize_resource
         redirect_to tic_tac_toe_game_path(@game.id), notice: "#{@game.game_message}"
       else
         @game.change_player_turn
-        redirect_to tic_tac_toe_game_path(@game.id), notice: "Your turn!"
+        redirect_to tic_tac_toe_game_path(@game.id)
       end
     else
-      redirect_to tic_tac_toe_game_path(@game.id), notice: "Your turn!"
+      redirect_to tic_tac_toe_game_path(@game.id)
     end   
   end
 

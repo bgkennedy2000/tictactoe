@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :ttt_moves
 
   has_secure_password
-  validates :username, uniqueness: { message: "Sorry.  That username is already taken.  Please choose another username."}
+  validates :username, uniqueness: { message: "is already taken.  Please choose another username."}
 
   def self.guest_user
     self.new(role: "guest")
@@ -33,6 +33,12 @@ class User < ActiveRecord::Base
     self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'draw' }
   end
 
+  def tic_tac_toe_games_in_process
+    self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == "in process..." }
+  end
+
+
+
   def opponent(game)
     if game.y_user == self
       game.x_user 
@@ -55,5 +61,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  def opponents_hash(games_array, options = { })
+    games_hash = { }
+    games_array.each do |game|
+    if game.y_user_id == self.id
+      games_hash[ [game.x_user, game.id] ] = game
+    end
+    if game.x_user_id == self.id
+      games_hash[ [ game.y_user, game.id ] ] = game
+    end
+    end
+    if options[:number]
+      games_hash.first(options[:number])
+    else
+      games_hash
+    end
+  end
+
+  def count_in_process
+    self.tic_tac_toe_games_in_process.size
+  end
 
 end

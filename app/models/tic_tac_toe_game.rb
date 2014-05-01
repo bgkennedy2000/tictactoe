@@ -88,19 +88,20 @@ class TicTacToeGame < ActiveRecord::Base
  def self.recent_games(user_id)
   games = { }
   if user_id
-    temp = self.user_games(user_id)
-    temp.each do |game|
-      # create a hash with the the opponent as key and the game as the value, add gameID to key to prevent overwriting games w/ same opponents
-      if game.y_user_id == user_id && game.continue?
-        games[ [game.x_user, game.id] ] = game
-      end
-      if game.x_user_id == user_id && game.continue?
-        games[ [ game.y_user, game.id ] ] = game
-      end
-    end
-    return games.first(3)
+    user = User.find(user_id)
+    users_games = user.tic_tac_toe_games_in_process
+    user.opponents_hash(users_games, number: 3)
   else
     { }
+  end
+ end
+
+ def self.games_count(user_id)
+  if user_id
+    user = User.find(user_id)
+    user.tic_tac_toe_games_in_process.count
+  else
+    0
   end
  end
 
