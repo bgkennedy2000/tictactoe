@@ -18,23 +18,48 @@ class User < ActiveRecord::Base
   end
 
   def tic_tac_toe_games
-    (self.tic_tac_toe_games_x_users + self.tic_tac_toe_games_y_users).sort! { |a,b| b.created_at <=> a.created_at }
+    result = (self.tic_tac_toe_games_x_users + self.tic_tac_toe_games_y_users).sort! { |a,b| b.created_at <=> a.created_at }
+    if result == nil
+      [ ]
+    else
+      result
+    end
   end
 
   def tic_tac_toe_games_won
-    self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'won'}
+    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'won'}
+    if result == nil
+      [ ]
+    else
+      result
+    end    
   end
 
   def tic_tac_toe_games_lost
-    self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'lost' }
+    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'lost' }
+    if result == nil
+      [ ]
+    else
+      result
+    end
   end
 
   def tic_tac_toe_games_drawn
-    self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'draw' }
+    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'draw' }
+    if result == nil
+      [ ]
+    else
+      result
+    end
   end
 
   def tic_tac_toe_games_in_process
-    self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == "in process..." }
+    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == "in process..." }
+    if result == nil
+      [ ]
+    else
+      result
+    end
   end
 
 
