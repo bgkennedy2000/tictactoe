@@ -8,7 +8,7 @@ en:
     attributes:
       tic_tac_toe_game:
         y_user_id: "Opponent"
-        y_user: "User"
+        user_turn_id: " "
     attributes:
       user:
         password_digest: "Password"

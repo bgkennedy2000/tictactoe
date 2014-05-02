@@ -29,6 +29,8 @@ header {
   margin: 0 0;
   color: #b2b2b2;
   padding: 0 35px;
+  position: fixed;
+  z-index: 1;
 }
 header a {
   color: #b2b2b2;
@@ -173,7 +175,7 @@ td.username_list {
   height: 20px;
   width: 110px;
 }
-thead.username_list tr h3 {
+  thead.username_list tr h3 {
   font-style: bold;
   margin: 5px 0px;
 }

@@ -11,7 +11,6 @@
     </ul>
   </div>
 <% end %>
-
 <section class='form'>
   <%= form_tag '/tic_tac_toe_games', class: 'clearfix', method: :post %>
     <div class='field clearfix'>
@@ -24,9 +23,11 @@
     <table>
       <thead><tr>Potential Opponents</tr></thead>
       <% @users.each do |user| %>
-      <tr>
-        <td class='username_list'><%= user.username unless user.username == 'Computer' %></td>
-      </tr>
+        <% if user.username != 'Computer' %>
+        <tr>
+          <td class='username_list'><%= user.username %></td>
+        </tr>
+        <% end %>
       <% end %>
     </table>
 </section>
