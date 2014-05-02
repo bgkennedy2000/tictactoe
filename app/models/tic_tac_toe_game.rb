@@ -91,6 +91,7 @@ class TicTacToeGame < ActiveRecord::Base
     user = User.find(user_id)
     users_games = user.tic_tac_toe_games_in_process
     user.opponents_hash(users_games, number: 3)
+
   else
     { }
   end

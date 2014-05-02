@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def tic_tac_toe_games_won
-    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'won'}
+    result = self.tic_tac_toe_games.select { |game| self.game_outcome(game) == 'won'}
     if result == nil
       [ ]
     else
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def tic_tac_toe_games_lost
-    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'lost' }
+    result = self.tic_tac_toe_games.select { |game| self.game_outcome(game) == 'lost' }
     if result == nil
       [ ]
     else
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def tic_tac_toe_games_drawn
-    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == 'draw' }
+    result = self.tic_tac_toe_games.select { |game| self.game_outcome(game) == 'draw' }
     if result == nil
       [ ]
     else
@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
   end
 
   def tic_tac_toe_games_in_process
-    result = self.tic_tac_toe_games.select! { |game| self.game_outcome(game) == "in process..." }
+    result = self.tic_tac_toe_games.select { |game| self.game_outcome(game) == "in process..." }
+    
     if result == nil
       [ ]
     else
