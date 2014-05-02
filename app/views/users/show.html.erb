@@ -16,7 +16,7 @@
     <tr>
       
       <td class='username_list'><p><%= @user.opponent(game).try(:username) %></p></td>
-      <td class='username_list column-two'><p><%= link_to @user.game_outcome(game), tic_tac_toe_game_ttt_move_path(game.id) %></p></td>
+      <td class='username_list column-two'><p><%= link_to @user.game_outcome(game), tic_tac_toe_game_path(game.id) %></p></td>
     </tr>
     <% end %>
   </table>
